@@ -1,12 +1,20 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        abortOnError false
+    }
+
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 21
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "0.1"
 
@@ -21,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation dependency.okhttp.runtime
 }
 
-apply from: './config/bintray.gradle'
+//apply from: './config/bintray.gradle'

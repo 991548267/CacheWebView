@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebResourceError;
@@ -18,6 +16,9 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.io.InputStream;
 
@@ -55,7 +56,7 @@ public class MainActivity extends Activity {
                 URL = urls[position];
                 //mInterceptor.loadUrl(mWebView,URL);
                 //URL=URL+"?r="+System.currentTimeMillis();
-                WebViewCacheInterceptorInst.getInstance().loadUrl(mWebView,URL);
+                WebViewCacheInterceptorInst.getInstance().loadUrl(mWebView, URL);
             }
 
             @Override
@@ -64,7 +65,7 @@ public class MainActivity extends Activity {
             }
         });
         initSettings();
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
 
 
             @Override
@@ -72,16 +73,16 @@ public class MainActivity extends Activity {
                 super.onPageFinished(view, url);
             }
 
-           @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                WebViewCacheInterceptorInst.getInstance().loadUrl(mWebView,request.getUrl().toString());
+                WebViewCacheInterceptorInst.getInstance().loadUrl(mWebView, request.getUrl().toString());
                 return true;
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                WebViewCacheInterceptorInst.getInstance().loadUrl(mWebView,url);
+                WebViewCacheInterceptorInst.getInstance().loadUrl(mWebView, url);
                 return true;
             }
 
@@ -89,13 +90,13 @@ public class MainActivity extends Activity {
             @Nullable
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                return  WebViewCacheInterceptorInst.getInstance().interceptRequest( request);
+                return WebViewCacheInterceptorInst.getInstance().interceptRequest(request);
             }
 
             @Nullable
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-                return  WebViewCacheInterceptorInst.getInstance().interceptRequest(url);
+                return WebViewCacheInterceptorInst.getInstance().interceptRequest(url);
             }
 
             @Override
@@ -145,14 +146,15 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void cleanCache(View v){
+    public void cleanCache(View v) {
         WebViewCacheInterceptorInst.getInstance().clearCache();
     }
-    public void getCacheFile(View v){
+
+    public void getCacheFile(View v) {
 
         String url = "http://m.mm131.com/css/at.js";
-        InputStream inputStream =  WebViewCacheInterceptorInst.getInstance().getCacheFile(url);
-        if (inputStream!=null){
+        InputStream inputStream = WebViewCacheInterceptorInst.getInstance().getCacheFile(url);
+        if (inputStream != null) {
 
         }
 
@@ -160,11 +162,11 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(mWebView.canGoBack()){
+        if (mWebView.canGoBack()) {
             mWebView.goBack();
             return;
         }
-       // mInterceptor.clearCache();
+        // mInterceptor.clearCache();
         super.onBackPressed();
     }
 }
